@@ -1,15 +1,78 @@
-import 'simplebar'; // or "import SimpleBar from 'simplebar';" if you want to use it manually.
-import 'simplebar/dist/simplebar.css';
+import "simplebar"; // or "import SimpleBar from 'simplebar';" if you want to use it manually.
+import "simplebar/dist/simplebar.css";
 
-// You will need a ResizeObserver polyfill for browsers that don't support it! (iOS Safari, Edge, ...)
-import ResizeObserver from 'resize-observer-polyfill';
-import { CubeControl, RubikCubic, WelcomeScreenBackground } from '~/shared/ui/graphics';
-import { PhilosophyCanvas } from '~/shared/ui/graphics';
-window.ResizeObserver = ResizeObserver;
-
-WelcomeScreenBackground;
+import { PhilosophyCanvas } from "@entities/philosophy";
+import { CubeControl, RubikCubic } from "@entities/rubik-cubic";
+import { WelcomeScreenBackground } from "@entities/welcome-screen-background";
+import { useEffect } from "react";
 
 export const HomePage = () => {
+  useEffect(() => {
+    const mainContent = document.querySelector(".wrapper__main-content");
+
+    // меню =======================
+    const buttonClous = document.querySelector(".button-clous");
+    const buttonClousLink = document.querySelector(".button-clous-link");
+    const buttonOpen = document.querySelector(".button-open");
+
+    if (!buttonClous || !mainContent || !buttonClousLink || !buttonOpen) return;
+
+    buttonClous.addEventListener("click", () => {
+      mainContent.classList.remove("_active");
+    });
+    buttonClousLink.addEventListener("click", (e) => {
+      //e.preventDefault();
+      //setTimeout(() => window.location.replace(e.target.href), 500);
+
+      mainContent.classList.remove("_active");
+      mainContent.classList.add("_active-following");
+    });
+    buttonOpen.addEventListener("click", () => {
+      mainContent.classList.add("_active");
+    });
+    // меню =======================
+
+    // portfolio - paralacs-object ==========================
+    const cards = document.querySelectorAll(".paralacs-object");
+
+    for (let i = 0; i < cards.length; i++) {
+      const element: any = cards[i];
+
+      if (!element) return;
+
+      element.addEventListener("mouseover", (event: any) => {
+        const halfHeidht = element.offsetHeight / 2;
+        const halfWidth = element.offsetWidth / 2;
+
+        const card = element.querySelector(".paralacs-object__content");
+
+        card.style.transform =
+          "rotateX(" +
+          -(event.offsetY - halfHeidht) / 6 +
+          "deg) rotateY(" +
+          (event.offsetX - halfWidth) / 6 +
+          "deg)";
+      });
+      element.addEventListener("mousemove", (event: any) => {
+        const halfHeidht = element.offsetHeight / 2;
+        const halfWidth = element.offsetWidth / 2;
+
+        const card = element.querySelector(".paralacs-object__content");
+
+        card.style.transform =
+          "rotateX(" +
+          -(event.offsetY - halfHeidht) / 6 +
+          "deg) rotateY(" +
+          (event.offsetX - halfWidth) / 6 +
+          "deg)";
+      });
+      element.addEventListener("mouseout", () => {
+        element.querySelector(".paralacs-object__content").style.transform =
+          "rotate(0)";
+      });
+    }
+    // portfolio - paralacs-object ==========================
+  }, []);
 
   return (
     <div className="wrapper">
@@ -31,6 +94,7 @@ export const HomePage = () => {
       <div
         className="wrapper__main-content main-content-wrapper"
         data-simplebar
+        style={{ overflowX: "hidden" }}
       >
         <div className="header-welcome max-container">
           <div className="header-welcome__container">
@@ -137,7 +201,8 @@ export const HomePage = () => {
                 <div className="hero__body-img hero-body-img">
                   <img
                     className="hero-body-img__img"
-                    src="./images/main-foto.jpg"
+                    // src={require("./images/main-foto.jpg")}
+                    src={require("./images/main-photo.png")}
                     alt="Это я - Артур Камерцель"
                   />
                 </div>
@@ -223,10 +288,6 @@ export const HomePage = () => {
                 "
                   >
                     <PhilosophyCanvas className="philosophy__canvas" />
-                    <canvas id="canvas-3" >
-                      ОЙ, что-то пошло не так, и ваш браузер не поддерживает тег
-                      canvas!
-                    </canvas>
                   </div>
                   <div
                     className="
@@ -243,7 +304,13 @@ export const HomePage = () => {
                     </p>
                   </div>
                   <div className="philosophy__image-wrapper">
-                    <div className="philosophy__image"></div>
+                    {/* <div className="philosophy__image" style={{backgroundImage: "url(require('./images/philosophy-img.jpg'))"}}></div> */}
+                    <div
+                      className="philosophy__image"
+                      style={{
+                        backgroundImage: `url(${require("./images/philosophy-img.jpg")})`,
+                      }}
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -322,12 +389,12 @@ export const HomePage = () => {
                       <div className="paralacs-object__wrapper"></div>
                       <div className="paralacs-object__content">
                         <img
-                          src="./images/portfolio/tulpar.jpg"
+                          src={require("./images/portfolio/tulpar.jpg")}
                           alt="Приветствующий экрай сайта"
                           className="site-portfolio__welcome-screen"
                         />
                         <img
-                          src="./images/portfolio/tulpar-full.jpg"
+                          src={require("./images/portfolio/tulpar-full.jpg")}
                           alt="Скриншот всего сайта"
                           className="site-portfolio__full-site"
                         />
@@ -347,12 +414,12 @@ export const HomePage = () => {
                       <div className="paralacs-object__wrapper"></div>
                       <div className="paralacs-object__content">
                         <img
-                          src="./images/portfolio/yaleshool.jpg"
+                          src={require("./images/portfolio/yaleshool.jpg")}
                           alt="Приветствующий экрай сайта"
                           className="site-portfolio__welcome-screen"
                         />
                         <img
-                          src="./images/portfolio/yaleshool-full.jpg"
+                          src={require("./images/portfolio/yaleshool-full.jpg")}
                           alt="Скриншот всего сайта"
                           className="site-portfolio__full-site"
                         />
@@ -374,12 +441,12 @@ export const HomePage = () => {
                       <div className="paralacs-object__wrapper"></div>
                       <div className="paralacs-object__content">
                         <img
-                          src="./images/portfolio/tattoo.jpg"
+                          src={require("./images/portfolio/tattoo.jpg")}
                           alt="Приветствующий экрай сайта"
                           className="site-portfolio__welcome-screen"
                         />
                         <img
-                          src="./images/portfolio/tattoo-full.jpg"
+                          src={require("./images/portfolio/tattoo-full.jpg")}
                           alt="Скриншот всего сайта"
                           className="site-portfolio__full-site"
                         />
@@ -398,12 +465,12 @@ export const HomePage = () => {
                       <div className="paralacs-object__wrapper"></div>
                       <div className="paralacs-object__content">
                         <img
-                          src="./images/portfolio/handmade.jpg"
+                          src={require("./images/portfolio/handmade.jpg")}
                           alt="Приветствующий экрай сайта"
                           className="site-portfolio__welcome-screen"
                         />
                         <img
-                          src="./images/portfolio/handmade-full.jpg"
+                          src={require("./images/portfolio/handmade-full.jpg")}
                           alt="Скриншот всего сайта"
                           className="site-portfolio__full-site"
                         />
@@ -424,13 +491,13 @@ export const HomePage = () => {
                       <div className="paralacs-object__content">
                         <img
                           // src="./images/portfolio/nurtown.jpg"
-                          // src={require('../shared/ui/graphics/RubikCubic/images/cubic/blue/1.jpg')}
-                          src={new URL('../shared/ui/graphics/RubikCubic/images/cubic/blue/1.jpg', import.meta.url).href}
+                          src={require("./images/portfolio/nurtown.jpg")}
+                          // src={new URL('../shared/ui/graphics/RubikCubic/images/cubic/blue/1.jpg', import.meta.url).href}
                           alt="Приветствующий экрай сайта"
                           className="site-portfolio__welcome-screen"
                         />
                         <img
-                          src="./images/portfolio/nurtown-full.jpg"
+                          src={require("./images/portfolio/nurtown-full.jpg")}
                           alt="Скриншот всего сайта"
                           className="site-portfolio__full-site"
                         />
@@ -456,7 +523,7 @@ export const HomePage = () => {
                 <div className="connection__body">
                   <h2 className="connection__title">Если вы уже думаете:</h2>
                   <img
-                    src="./images/ZG7nYNOEX_c.jpg"
+                    src={require("./images/ZG7nYNOEX_c.jpg")}
                     alt="мем про то, как Вам сильно понравилось портфолио"
                     className="connection__image"
                   />

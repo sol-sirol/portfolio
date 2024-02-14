@@ -100,12 +100,14 @@ export const WelcomeScreenBackground = ({
   };
   const drawLines = (
     ctx: CanvasRenderingContext2D,
+
+    
     particles: any[],
     properties: PropertiesType
   ) => {
     let x1, y1, x2, y2, length, opacity;
-    for (let i in particles) {
-      for (let j in particles) {
+    for (const i in particles) {
+      for (const j in particles) {
         x1 = particles[i].x;
         y1 = particles[i].y;
         x2 = particles[j].x;
@@ -125,7 +127,7 @@ export const WelcomeScreenBackground = ({
     }
   };
   const reDrawParticles = (particles: Particle[]) => {
-    for (let i in particles) {
+    for (const i in particles) {
       particles[i].reCalculateLife();
       particles[i].position();
       particles[i].reDraw();

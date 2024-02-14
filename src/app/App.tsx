@@ -1,5 +1,4 @@
-import { HomePage } from '~/pages';
-import './styles.scss';
+import { HomePage } from "@pages/HomePage";
 
 export const App = () => (
   <div className="app">

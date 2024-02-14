@@ -1,78 +1,30 @@
-# TS + React + Vite + FSD project
+# React + TypeScript + Vite
 
-Website with my portfolio
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Includes
+Currently, two official plugins are available:
 
-### deploy to gh-pages (later...)
-<!-- [workflow](.github/workflows/pages.yml) -->
-<!-- Allows to deploy spa project to github pages via github action -->
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-<!-- Please adjust `VITE_BASE_URL` in [.env](.env) to fit your repo name -->
+## Expanding the ESLint configuration
 
-<!-- ### commitlint + conventional commits -->
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-<!-- To add it to the project I use [commitlint website](https://commitlint.js.org/#/guides-local-setup). -->
+- Configure the top-level `parserOptions` property like this:
 
-<!-- I always prefer this way to deal with commit messages. It has a lot of benefits,
-[read more](https://www.conventionalcommits.org/en/v1.0.0/) about the conception. -->
-
-<!-- ### basic css layout + [clsx](https://www.npmjs.com/package/clsx) util lib
-See `src/styles.css` and `src/app/App.tsx` -->
-
-<!-- ### [eslint](https://eslint.org/) -->
-
-<!-- To add it to the project I use `npm init @eslint/config` command. -->
-
-<!-- ### [prettier](https://prettier.io/) -->
-
-<!-- To add it to the project I follow [official guide](https://prettier.io/docs/en/install.html). -->
-
-<!-- ### [autoprefixer](https://autoprefixer.github.io/)
-To add it to the project I run `npm i -D postcss@latest autoprefixer@latest`
-
-Then add a file postcss.config.js on the root project directory
 ```js
-module.exports = {
-  plugins: {
-    autoprefixer: {}
-  }
+export default {
+  // other rules...
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig.node.json'],
+    tsconfigRootDir: __dirname,
+  },
 }
-``` -->
+```
 
-<!-- Then patch `vite.config.ts` with this section:
-```js
-css: {
-    postcss: {
-      plugins: [
-        autoprefixer({}) // add options if needed
-      ]
-    }
-  }
-``` -->
-<!-- 
-### [storybook](https://storybook.js.org/)
-
-Storybook is a tool for building UI components and pages in isolation. -->
-
-<!-- To add it to the project I follow [official guide](https://storybook.js.org/docs/react/get-started/install/). -->
-<!-- 
-### npm-check-updates helper
-
-I use this tool weekly to manually update the dependencies
-
-### [vite loadEnv](https://vitejs.dev/config/#using-environment-variables-in-config)
-Allows to use env variables in config
-
-### [vite-tsconfig-paths](https://github.com/aleclarson/vite-tsconfig-paths)
-
-Give vite the ability to resolve imports using TypeScript's path mapping
-
-### [vite-plugin-checker](https://vite-plugin-checker.netlify.app/)
-
-Vite plugin that provide checks e.g. `[TypeScript] Found 0 errors. Watching for file changes.` -->
-
-<!-- ### local https via [vite-plugin-mkcert](https://www.npmjs.com/package/vite-plugin-mkcert)
-Allows to use https://localhost in development
-
-[shields-conventional-commits-image]: https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg -->
+- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
+- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
